@@ -2,19 +2,26 @@
 // artist name / song name
 // file path to mp3
 class Song {
-    private final String title;
+    private final String title;    // The basic fields that are part of a song
+    private final String artist;
     private final String filepath;
     private Song next = null;
     private Song prev = null;
 
     // Constructor
-    Song (String t, String f){
-        this.title = t;
-        this.filepath = f;
+    Song (String title, String artist, String filepath){
+        this.title = title;
+        this.artist = artist;
+        this.filepath = filepath;
     }
 
+    // Getters and Setters
     public String getTitle(){
         return title;
+    }
+
+    public String getArtist(){
+        return artist;
     }
 
     public String getFilePath(){
