@@ -1,8 +1,12 @@
-// This works with doubly linked list java file
-// Where methods sit like next(), addsong(), removeSong()
-// This will serve as the doubly linked list.
+// Playlist will be similar to doubly linked list file.
+// Playlist needs to play/pause, skip, back, add song,
+// remove song, display song. and if we have time shuffle.
 
-public class DoublyLinkedList {
+
+
+
+// Doubly linked list for reference.
+/*public class DoublyLinkedList {
     int size = 0;
     Node head, tail;
 
@@ -128,4 +132,4 @@ public class DoublyLinkedList {
         }
         return node.key;
     }
-}
+}*/
