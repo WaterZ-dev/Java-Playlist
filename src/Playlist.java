@@ -18,8 +18,8 @@ public class Playlist {
             head = track;
             tail = track;
         } else {
-            track.prev = tail;
-            tail.next = track;
+            track.setPrev(tail);
+            tail.setNext(track);
             tail = track;
         }
         size++;
