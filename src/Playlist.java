@@ -1,10 +1,11 @@
-//Playlist functions as the main file and works with DoublyLinkedList to load and navigate through the audio files
-
+// Playlist: doubly linked list data structure that stores Song nodes.
+// Supports adding, removing, and navigating through songs.
 public class Playlist {
 
     private Song head = null;
     private Song tail = null;
     private int size = 0;
+    private Song playing = null; // keeps track of the song that is playing at the time.
 
     public Playlist(){ // Constructor
 
@@ -13,10 +14,11 @@ public class Playlist {
     // PLAYLIST METHODS
 
     public void addSong(String title, String artist, String filepath){
-        Song track = new Song(title, artist, filepath);
+        Song track = new Song(title, artist, filepath); // track as in the current song
         if (size == 0){
             head = track;
             tail = track;
+            playing = track; // also sets the song that is clicked to the head
         } else {
             track.setPrev(tail);
             tail.setNext(track);
@@ -29,10 +31,12 @@ public class Playlist {
         Song songName = head;
         if (size == 0){ // If playlist is EMPTY
             System.out.println("Playlist is EMPTY");
-        } else if (size == 1){ // If there is only 1 song in the playlist
-            head = null;
-            tail = null;
-            size--;
+        } else if (size == 1){// If there is only 1 song in the playlist
+            if (head.getTitle().equals(title)){
+                head = null;
+                tail = null;
+                size--;
+            }
         } else {
             while (songName != null){
 
@@ -68,5 +72,25 @@ public class Playlist {
         }
 
 
+    }
+
+    public Song nextSong(){
+        return null;
+    }
+
+    public Song prevSong(){
+        return null;
+    }
+
+    public void printPlaylist(){
+
+    }
+
+    public int getSize(){ //
+        return 0;
+    }
+
+    public Song getPlaying(){ // gets current song thet is playing
+        return null;
     }
 }
