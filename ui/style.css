@@ -2,123 +2,175 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-
 }
 
-.roboto-<uniquifier> {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+@font-face {
+    font-family: 'myFont';
+    src: url("../resources/fonts/Bitcount,Roboto/Bitcount/Bitcount.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'secondFont';
+    src: url("../resources/fonts/Unica_One/Unica_One/UnicaOne-Regular.ttf") format('truetype');
 }
 
 nav {
-        color: white;
-        background-color: rgb(48, 48, 48);
-        padding: 15px;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 100;
-        text-align: center;
-        border: 5px solid rgb(25, 21, 21);
-        border-radius: 15px;
-
+    color: white;
+    background-color: rgb(48, 48, 48);
+    padding: 15px;
+    font-family: 'myFont', sans-serif;
+    font-size: 50px;
+    color: rgb(29, 185, 84);
+    text-align: center;
+    border: 5px solid rgb(25, 21, 21);
+    border-radius: 15px;
 }
 
 body {
-        padding: 25px;
-        font-family: 'Roboto', sans-serif;
-        color: white;
-        background-color: rgb(25, 21, 21);
+    padding: 25px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: rgb(25, 21, 21);
 }
 
 .container {
-        display: flex;
-        min-height: 100vh;
-        margin-top: 10px;
-        border-radius: 15px;
+    display: flex;
+    min-height: 100vh;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+h2 {
+    font-family: 'myFont', sans-serif;
+    font-size: 50px;
+    padding: 20px;
 }
 
 .sideBar {
-        width: 350px;
-        background-color: rgb(48, 48, 48);
-        border: 8px solid rgb(25, 21, 21);
-        border-radius: 15px;
-        font-family: 'Roboto';
-        font-weight: 200;
-        text-align: left;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
+    width: 350px;
+    background-color: rgb(48, 48, 48);
+    border: 8px solid rgb(25, 21, 21);
+    border-radius: 15px;
+    font-family: 'secondFont';
+    font-size: 32px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .sidebarTitle {
-        border-radius: 15px;
-        text-align: left;
+    border-radius: 15px;
+    text-align: left;
 }
 
 .sidebarContent {
-        border: 8px solid rgb(25, 21, 21);
-        border-radius: 15px;
-        text-align: left;
+    border: 8px solid rgb(25, 21, 21);
+    border-radius: 15px;
+    text-align: left;
 }
- h4 {
-        margin-left: 10px;
-        padding: 10px;
+
+h4 {
+    margin-left: 10px;
+    padding: 10px;
 }
 
 .main {
-        flex: 1;
-        padding: 20px;
-        text-align: center;
+    flex: 1;
+    padding: 10px;
+    text-align: center;
 }
 
 .ipod {
-        padding: 20px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background: rgb(131, 188, 219);
-        width: 550px;
-        height: 85%;
-        border-radius: 16px;
+    padding: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: rgb(131, 188, 219);
+    width: 550px;
+    height: 85%;
+    border-radius: 16px;
 }
 
 .screen {
-        padding: 3px;
-        background: black;
-        border-radius: 15px;
-        color: white;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        height: 43%;
-
+    padding: 3px;
+    background: black;
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 43%;
 }
 
 .wheel {
-        position: relative;
-        padding: 3px;
-        background-color: white;
-        height: 300px;
-        width: 300px;
-        border-radius: 50%;
-        margin: auto;
-        display: flex;
+    position: relative;
+    padding: 3px;
+    background-color: white;
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    margin: auto;
+    display: flex;
 }
 
-.innerWheel {
-        background-color: rgb(232, 234, 235);
-        height: 110px;
-        width: 110px;
-        border-radius: 50%;
-        margin: auto;
+.wheelButton {
+    position:absolute;
+    color: rgb(80, 80, 90);
+    font-family: 'Roboto', sans-serif;
+    background: none;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer
 
+}
+
+.wheelButton img {
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+
+.wheelButton:hover {
+    color: black;
+}
+
+.menuBtn {
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    }
+
+.playBtn {
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.prevBtn {
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.skipBtn {
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.innerWheel {
+    background-color: rgb(232, 234, 235);
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+    margin: auto;
 }
 
 h5 {
-        font-size: 30px;
+    font-family: 'secondFont';
+        font-size: 50px;
 }
