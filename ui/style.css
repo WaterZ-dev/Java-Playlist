@@ -1,0 +1,112 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+nav {
+        color: white;
+        background-color: rgb(48, 48, 48);
+        padding: 15px;
+        font-family: 'Inter', sans-serif;
+        text-align: center;
+        border: 5px solid rgb(25, 21, 21);
+        border-radius: 15px;
+
+}
+
+body {
+        padding: 25px;
+        font-family: 'Inter', sans-serif;
+        color: white;
+        background-color: rgb(25, 21, 21);
+}
+
+.container {
+        display: flex;
+        min-height: 100vh;
+        margin-top: 10px;
+        border-radius: 15px;
+}
+
+.sideBar {
+        width: 350px;
+        background-color: rgb(48, 48, 48);
+        border: 8px solid rgb(25, 21, 21);
+        border-radius: 15px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+}
+
+.sidebarTitle {
+        border-radius: 15px;
+        text-align: left;
+}
+
+.sidebarContent {
+        border: 8px solid rgb(25, 21, 21);
+        border-radius: 15px;
+        text-align: left;
+}
+ h4 {
+        margin-left: 10px;
+        padding: 10px;
+}
+
+.main {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+}
+
+.ipod {
+        padding: 20px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background: rgb(131, 188, 219);
+        width: 70%;
+        height: 85%;
+        border-radius: 16px;
+}
+
+.screen {
+        padding: 3px;
+        background: black;
+        border-radius: 15px;
+        color: white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height: 43%;
+
+}
+
+.wheel {
+        position: relative;
+        padding: 3px;
+        background-color: white;
+        height: 300px;
+        width: 300px;
+        border-radius: 50%;
+        margin: auto;
+        display: flex;
+}
+
+.innerWheel {
+        background-color: rgb(232, 234, 235);
+        height: 110px;
+        width: 110px;
+        border-radius: 50%;
+        margin: auto;
+
+}
+
+h5 {
+        font-size: 30px;
+}
