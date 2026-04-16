@@ -5,11 +5,21 @@
 
 }
 
+.roboto-<uniquifier> {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
 nav {
         color: white;
         background-color: rgb(48, 48, 48);
         padding: 15px;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 100;
         text-align: center;
         border: 5px solid rgb(25, 21, 21);
         border-radius: 15px;
@@ -18,7 +28,7 @@ nav {
 
 body {
         padding: 25px;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Roboto', sans-serif;
         color: white;
         background-color: rgb(25, 21, 21);
 }
@@ -35,6 +45,8 @@ body {
         background-color: rgb(48, 48, 48);
         border: 8px solid rgb(25, 21, 21);
         border-radius: 15px;
+        font-family: 'Roboto';
+        font-weight: 200;
         text-align: left;
         display: flex;
         flex-direction: column;
@@ -70,7 +82,7 @@ body {
         flex-direction: column;
         justify-content: space-between;
         background: rgb(131, 188, 219);
-        width: 70%;
+        width: 550px;
         height: 85%;
         border-radius: 16px;
 }
