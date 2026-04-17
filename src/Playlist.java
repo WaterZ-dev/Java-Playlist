@@ -125,7 +125,11 @@ public class Playlist {
     }
 
     public void printPlaylist(){
-
+        int counter = 0;
+        Song display = head;
+        while (display != null){
+            display.getNext();
+        }
 
     }
 
