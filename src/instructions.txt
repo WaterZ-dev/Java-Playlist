@@ -1,0 +1,170 @@
+Good question — and the answer is: the JS doesn't need to know Spark exists yet. Member 1 can build the entire UI against a placeholder data source, then when Spark is ready, swap one layer — not rewrite everything.
+Here's the pattern Member 1 should follow. Tell them this explicitly:
+The key idea: isolate where the data comes from.
+Instead of scattering song data and state updates throughout the UI code, wrap them in a small set of functions. The rest of the UI only calls those functions — it doesn't know or care where the data actually comes from.
+javascript// === DATA LAYER (swap this later for fetch calls) ===
+let songs = [
+    { title: "20 Cigarettes", artist: "Morgan Wallen", url: "/audio/20Cigarettes--MorganWallen.mp3" },
+    { title: "All the Love", artist: "Ye", url: "/audio/AlltheLove--Ye.mp3" },
+    // ... etc, all 10 songs matching your Playlist.java data
+];
+let currentIndex = 0;
+
+async function getPlaylist() {
+    return songs;
+}
+
+async function getCurrentSong() {
+    return songs[currentIndex];
+}
+
+async function nextSong() {
+    currentIndex = (currentIndex + 1) % songs.length;
+    return songs[currentIndex];
+}
+
+async function prevSong() {
+    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    return songs[currentIndex];
+}
+
+async function playByIndex(index) {
+    currentIndex = index;
+    return songs[currentIndex];
+}
+
+async function removeSong(title) {
+    songs = songs.filter(s => s.title !== title);
+    if (currentIndex >= songs.length) currentIndex = 0;
+    return songs;
+}
+Notice the async keyword — this is important. Even though these functions return data immediately right now, they're written async so they return Promises. Why? Because when Spark is wired in, the real versions will use fetch(), which is asynchronous. If Member 1 writes the rest of their UI assuming these functions return data synchronously, they'll have to rewrite everything when Spark arrives.
+The rest of the UI uses await:
+javascript// === UI LAYER (stays exactly the same after Spark integration) ===
+
+async function renderTracklist() {
+    const list = await getPlaylist();
+    const sidebar = document.querySelector('.sidebarContent');
+    sidebar.innerHTML = '';
+    list.forEach((song, index) => {
+        const row = document.createElement('div');
+        row.className = 'track';
+        row.dataset.index = index;
+        row.innerHTML = `<div class="trackTitle">${song.title}</div>
+                         <div class="trackArtist">${song.artist}</div>`;
+        row.addEventListener('click', () => handlePlayByIndex(index));
+        sidebar.appendChild(row);
+    });
+    updateActiveRow();
+}
+
+async function updateActiveRow() {
+    const current = await getCurrentSong();
+    document.querySelectorAll('.track').forEach(row => {
+        const song = songs[row.dataset.index];
+        row.classList.toggle('active', song && song.title === current.title);
+    });
+    document.querySelector('.screen h5').textContent = current 
+        ? `${current.title} — ${current.artist}` 
+        : 'Now Playing';
+}
+
+async function handleNext() {
+    await nextSong();
+    updateActiveRow();
+    playAudio();
+}
+
+async function handlePrev() {
+    await prevSong();
+    updateActiveRow();
+    playAudio();
+}
+
+async function handlePlayByIndex(index) {
+    await playByIndex(index);
+    updateActiveRow();
+    playAudio();
+}
+
+// Audio playback
+const audio = new Audio();
+let isPlaying = false;
+
+async function playAudio() {
+    const current = await getCurrentSong();
+    if (!current) return;
+    audio.src = current.url;
+    audio.play();
+    isPlaying = true;
+}
+
+function togglePlay() {
+    if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+    } else {
+        audio.play();
+        isPlaying = true;
+    }
+}
+
+// Wire up wheel buttons
+document.querySelector('.skipBtn').addEventListener('click', handleNext);
+document.querySelector('.prevBtn').addEventListener('click', handlePrev);
+document.querySelector('.playBtn').addEventListener('click', togglePlay);
+// menuBtn intentionally does nothing
+
+// Initial render
+renderTracklist();
+Now — here's the payoff. When your Spark server is ready, Member 1 only changes the data layer:
+javascript// === DATA LAYER (after Spark is ready) ===
+
+async function getPlaylist() {
+    const res = await fetch('/api/playlist');
+    return res.json();
+}
+
+async function getCurrentSong() {
+    const res = await fetch('/api/current');
+    return res.json();
+}
+
+async function nextSong() {
+    const res = await fetch('/api/next', { method: 'POST' });
+    return res.json();
+}
+
+async function prevSong() {
+    const res = await fetch('/api/prev', { method: 'POST' });
+    return res.json();
+}
+
+async function playByIndex(index) {
+    const res = await fetch(`/api/play/${index}`, { method: 'POST' });
+    return res.json();
+}
+
+async function removeSong(title) {
+    const res = await fetch(`/api/remove/${encodeURIComponent(title)}`, { method: 'DELETE' });
+    return res.json();
+}
+That's the whole integration change. The UI layer is untouched. Every render, every event handler, every audio call — identical. Member 1 deletes ~30 lines of placeholder data functions and pastes ~30 lines of fetch-based replacements. Done.
+What to tell Member 1, practically:
+
+Build the data layer first with the placeholder array. Use async/await even though you don't need to yet.
+Every function that touches song data goes through the data layer. Never read songs[0] directly in a UI function — always call getCurrentSong() or getPlaylist().
+Confirm the song data shape with me (you): { title, artist, url }. Match that exactly.
+When Spark is ready, we only touch one section of the file.
+
+The JSON contract you need to lock in with Member 1 now:
+
+GET /api/playlist → returns [{title, artist, url}, ...]
+GET /api/current → returns {title, artist, url} or null
+POST /api/next → returns new current song {title, artist, url}
+POST /api/prev → returns new current song {title, artist, url}
+POST /api/play/:index → returns new current song {title, artist, url}
+DELETE /api/remove/:title → returns updated playlist [...]
+
+Text Member 1 that contract now. Whatever shape their placeholder uses, it must match this. If they want to propose changes to field names or endpoint structure, hash it out before either of you writes more code. Five minutes of agreement now saves real pain on integration day.
+One nit on your Playlist.java: your Song object probably has filepath as its field name, but the browser will expect url. Either rename the field in Song.java, or in the Spark layer you'll handle the mapping when serializing to JSON. Worth deciding now. Easiest path: rename filepath → url in Song.java so everything is consistent end-to-end.
