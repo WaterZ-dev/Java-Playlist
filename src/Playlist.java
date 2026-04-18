@@ -125,10 +125,17 @@ public class Playlist {
     }
 
     public void printPlaylist(){
-        int counter = 0;
-        Song display = head;
-        while (display != null){
-            display.getNext();
+        int counter = 0; // song counter
+        if (size == 0){
+            System.out.println("PLAYLIST IS EMPTY");
+        } else {
+            Song songName = head;
+            while (songName != null){
+                counter = counter + 1;
+                System.out.println(counter + ". " + songName.getTitle() + " - " + songName.getArtist());
+                songName = songName.getNext();
+            }
+
         }
 
     }
