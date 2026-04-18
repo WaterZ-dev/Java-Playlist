@@ -8,6 +8,16 @@ public class Playlist {
     private Song playing = null; // keeps track of the song that is playing at the time.
 
     public Playlist(){ // Constructor
+        addSong("20 Cigarettes", "Morgan Wallen", "/audio/20Cigarettes--MorganWallen.mp3");
+        addSong("All the Love", "Ye", "/audio/AlltheLove--Ye.mp3");
+        addSong("American Girls", "Harry Styles", "/audio/AmericanGirls--HarryStyles.mp3");
+        addSong("E85", "Don Toliver", "/audio/E85--DonToliver.mp3");
+        addSong("Hooligan", "BTS", "/audio/Hooligan--BTS.mp3");
+        addSong("Risk it All", "Bruno Mars", "/audio/RiskitAll--BrunoMars.mp3");
+        addSong("Seeing Someone", "Luke Combs", "/audio/SeeingSomeone--LukeCombs.mp3");
+        addSong("So Easy", "Olivia Dean", "/audio/SoEasy--OliviaDean.mp3");
+        addSong("Turista", "Bad Bunny", "/audio/Turista--BadBunny.mp3");
+        addSong("Saint James Infirmary", "Louis Armstrong", "/audio/song1.mp3");
 
     }
 
@@ -33,14 +43,26 @@ public class Playlist {
             System.out.println("Playlist is EMPTY");
         } else if (size == 1){// If there is only 1 song in the playlist
             if (head.getTitle().equals(title)){
+                if (head == playing) {
+                    playing = null; // Moves playing pointer also
+                }
                 head = null;
                 tail = null;
+
                 size--;
             }
         } else {
             while (songName != null){
 
                 if(songName.getTitle().equals(title)){
+
+                    if (songName == playing){
+                        if (songName.getNext() != null){
+                            playing = songName.getNext();
+                        } else {
+                            playing = songName.getPrev();
+                        }
+                    }
 
                     if (songName == head) { // If the song to delete is the first one(head)
                         head = songName.getNext();
@@ -75,22 +97,54 @@ public class Playlist {
     }
 
     public Song nextSong(){
-        return null;
+        if (playing == null){
+            return null;
+        }
+
+        else if (playing.getNext() != null){
+            playing = playing.getNext();
+        } else {
+            // loop it back to head
+            playing = head;
+        }
+        return playing;
     }
 
     public Song prevSong(){
-        return null;
+        if (playing == null){
+            return null;
+        }
+
+        else if (playing.getPrev() != null){
+            playing = playing.getPrev();
+        } else {
+            // loop it back to tail if you're playing the first song.
+            playing = tail;
+        }
+        return playing;
     }
 
     public void printPlaylist(){
+        int counter = 0; // song counter
+        if (size == 0){
+            System.out.println("PLAYLIST IS EMPTY");
+        } else {
+            Song songName = head;
+            while (songName != null){
+                counter = counter + 1;
+                System.out.println(counter + ". " + songName.getTitle() + " - " + songName.getArtist());
+                songName = songName.getNext();
+            }
+
+        }
 
     }
 
     public int getSize(){ //
-        return 0;
+        return size;
     }
 
     public Song getPlaying(){ // gets current song thet is playing
-        return null;
+        return playing;
     }
 }

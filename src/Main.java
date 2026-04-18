@@ -2,10 +2,20 @@ class Main {
     public static void main(String[] args) {
         Playlist playlist = new Playlist();
 
-        playlist.addSong("Song 1", "Artist 1", "resources/audio/song1.mp3");
-        playlist.addSong("Song 2", "Artist 2", "resources/audio/song2.mp3");
-        playlist.addSong("Song 3", "Artist 3", "resources/audio/song3.mp3");
+        playlist.printPlaylist();
+        playlist.nextSong();
+        playlist.nextSong();
+        playlist.removeSong("20 Cigarettes");
+        playlist.printPlaylist();
+        playlist.removeSong("Hooligan");
+        playlist.printPlaylist();
+        playlist.removeSong("All the Love");
+        playlist.removeSong("American Girls");
+        playlist.removeSong("E85");
+        playlist.removeSong("Risk it All");
+        playlist.printPlaylist();
 
-        playlist.removeSong("Song 2");
+
+
     }
 }
